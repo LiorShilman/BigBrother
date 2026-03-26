@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:title="@string/big_brother_preference"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            app:key="name_preference"
+            app:title="@string/name_preference"
+            app:summary="@string/summary_name_preference"
+            app:dialogTitle="@string/dialog_name_preference"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            app:key="tel_preference"
+            app:title="@string/tel_preference"
+            app:summary="@string/summary_tel_preference"
+            app:dialogTitle="@string/dialog_tel_preference"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            app:key="service_preference"
+            app:title="@string/title_service_switch_preference"
+            app:summary="@string/summary_service_switch_preference_yes_no"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,25 @@
+# Android
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# .NET
+Server/BigBrotherServer/bin/
+Server/BigBrotherServer/obj/
+*.user
+*.suo
+
+# OS
+Thumbs.db
+.DS_Store

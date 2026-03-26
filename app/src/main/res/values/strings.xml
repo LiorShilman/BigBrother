@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">BigBrother</string>
+    <string name="subtitle_location_tracker">Location Tracking Service</string>
+    <string name="big_brother_preference">Big Brother Configuration</string>
+    <string name="name_preference">Your name : </string>
+    <string name="summary_name_preference">Please insert your name.</string>
+    <string name="dialog_name_preference">Your Name</string>
+    <string name="tel_preference">Your telephone number : </string>
+    <string name="summary_tel_preference">Please insert your telephone number.</string>
+    <string name="dialog_tel_preference">Your Telephone</string>
+    <string name="title_service_switch_preference">Run service ? </string>
+    <string name="summary_service_switch_preference_yes_no">Do you want run service ? </string>
+    <string name="title_activity_big_brother_preference">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="start">Start</string>
+    <string name="label_stop">Stop</string>
+    <string name="title_exit_menu">Exit</string>
+    <string name="status_idle">Idle</string>
+    <string name="status_running">Tracking Active</string>
+    <string name="status_paused">Paused</string>
+    <string name="status_stopped">Stopped</string>
+    <string name="label_latitude">LATITUDE</string>
+    <string name="label_longitude">LONGITUDE</string>
+    <string name="label_last_update">Last update: --</string>
+    <string name="label_quick_settings">Quick Settings</string>
+    <string name="label_dark_mode">Dark Mode</string>
+</resources>

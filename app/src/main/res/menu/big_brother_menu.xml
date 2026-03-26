@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+     <item
+        android:id="@+id/big_brother_settings"
+        android:orderInCategory="100"
+         app:showAsAction="ifRoom"
+        android:title="@string/settings"  android:icon="@drawable/ic_launcher_setting"/>
+    <item
+        android:id="@+id/big_brother_start"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="@string/start"  android:icon="@drawable/ic_launcher_start"/>
+	 <item android:id="@+id/exit" android:enabled="true" app:showAsAction="ifRoom" android:orderInCategory="100" android:title="@string/title_exit_menu"  android:icon="@drawable/ic_launcher_shutdown" android:visible="true"/>
+</menu>
