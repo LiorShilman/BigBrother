@@ -279,6 +279,32 @@ function connectToServer() {
         }
     });
 
+    // SOS Alert
+    connection.on('SOSAlert', (name, lat, lng, street, time) => {
+        console.log('SOS ALERT from', name);
+        showSOSAlert(name, lat, lng, street, time);
+
+        // Fly to location on map
+        if (lat && lng) {
+            map.flyTo([lat, lng], 17, { duration: 1 });
+        }
+
+        // Native notification
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('SOS ALERT - ' + name, {
+                body: street || `${lat}, ${lng}`,
+                icon: 'icons/icon-192.svg',
+                tag: 'sos-' + name,
+                requireInteraction: true
+            });
+        }
+
+        // Vibrate
+        if ('vibrate' in navigator) {
+            navigator.vibrate([500, 200, 500, 200, 500, 200, 500]);
+        }
+    });
+
     connection.onreconnecting(() => setBadge('connecting'));
     connection.onreconnected(() => {
         setBadge('connected');
@@ -576,6 +602,59 @@ function showToast(msg) {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
     }, 2500);
+}
+
+// ===== SOS Alert =====
+function showSOSAlert(name, lat, lng, street, time) {
+    // Remove existing SOS overlay
+    const existing = document.getElementById('sos-overlay');
+    if (existing) existing.remove();
+
+    const location = street || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'sos-overlay';
+    overlay.innerHTML = `
+        <div class="sos-content">
+            <div class="sos-icon">!</div>
+            <h2>SOS ALERT</h2>
+            <div class="sos-name">${escHtml(name)}</div>
+            <div class="sos-location">${escHtml(location)}</div>
+            <div class="sos-time">${escHtml(time)}</div>
+            <div class="sos-actions">
+                <button type="button" class="popup-btn" onclick="navigateWaze(${lat},${lng});dismissSOS()">Waze</button>
+                <button type="button" class="popup-btn" onclick="openGoogleMaps(${lat},${lng});dismissSOS()">Maps</button>
+                <button type="button" class="popup-btn sos-dismiss" onclick="dismissSOS()">Dismiss</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Play alert sound using Web Audio API
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        function beep(freq, start, dur) {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = freq;
+            gain.gain.value = 0.3;
+            osc.start(ctx.currentTime + start);
+            osc.stop(ctx.currentTime + start + dur);
+        }
+        beep(880, 0, 0.3);
+        beep(880, 0.5, 0.3);
+        beep(880, 1.0, 0.3);
+    } catch (e) {}
+}
+
+function dismissSOS() {
+    const overlay = document.getElementById('sos-overlay');
+    if (overlay) {
+        overlay.style.animation = 'fadeOut 0.3s';
+        setTimeout(() => overlay.remove(), 300);
+    }
 }
 
 // ===== Utils =====

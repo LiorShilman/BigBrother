@@ -217,6 +217,12 @@ public class GPSLocationSrv extends Service {
             } catch (Exception ex) {
                 Log.e(TAG, "SENDMARKER_ACTION.", ex);
             }
+        } else if (intent.getAction().equals(Constants.ACTION.SOS_ACTION)) {
+            try {
+                sendSOS();
+            } catch (Exception ex) {
+                Log.e(TAG, "SOS_ACTION.", ex);
+            }
         }
 
         return START_REDELIVER_INTENT;
@@ -298,6 +304,17 @@ public class GPSLocationSrv extends Service {
         intentAlarmBroadcastReceiver.setAction(Constants.SIGNALR.SENDMARKER_ALARM_ACTION);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, Constants.SIGNALR.ALARM_REQUEST_CODE, intentAlarmBroadcastReceiver, pendingFlags);
         alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.GPS.SLOW_INTERVAL, alarmIntent);
+    }
+
+    private void sendSOS() {
+        if (mHubConnection != null && mHubConnection.getConnectionState() == HubConnectionState.CONNECTED) {
+            mHubConnection.invoke("SendSOS", mName);
+            Log.d(TAG, "SOS sent for " + mName);
+        }
+        // Also force send current location
+        if (mLocationListener != null) {
+            mLocationListener.SendLocation();
+        }
     }
 
     private void stopSignalR() {

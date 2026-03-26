@@ -1,4 +1,5 @@
 using BigBrotherServer.Models;
+using BigBrotherServer.Services;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
 
@@ -9,6 +10,7 @@ public interface IBigBrotherClient
     Task MarkersUpdated(Marker[] markers);
     Task SubscribeFinished();
     Task HeadsUpNotification(string title, string message);
+    Task SOSAlert(string name, double lat, double lng, string street, string time);
 }
 
 public class BigBrotherHub : Hub<IBigBrotherClient>
@@ -73,6 +75,30 @@ public class BigBrotherHub : Hub<IBigBrotherClient>
         catch (Exception e)
         {
             Console.WriteLine($"SendHeadsUpNotification error: {e.Message}");
+        }
+    }
+
+    public async Task SendSOS(string name)
+    {
+        try
+        {
+            Console.WriteLine($"*** SOS ALERT from {name} ***");
+            // Get the latest marker for this user to include location
+            var locationMgr = Context.GetHttpContext()?.RequestServices.GetService<ILocationMgr>();
+            var markers = locationMgr?.GetMarkers();
+            var marker = markers?.FirstOrDefault(m => m.Name == name);
+
+            double lat = marker?.Lat ?? 0;
+            double lng = marker?.Long ?? 0;
+            string street = marker?.Street ?? "";
+            string time = DateTime.Now.ToString("dd/MM/yy HH:mm:ss");
+
+            await Clients.Group(Constants.WEB_GROUP).SOSAlert(name, lat, lng, street, time);
+            Console.WriteLine($"SOS broadcast to Web group for {name}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"SendSOS error: {e.Message}");
         }
     }
 

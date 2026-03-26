@@ -273,6 +273,24 @@
 
             </LinearLayout>
 
+            <!-- SOS Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_sos"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="16dp"
+                android:text="SOS"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.15"
+                app:cornerRadius="32dp"
+                app:backgroundTint="@color/status_stopped"
+                android:textColor="@android:color/white"
+                app:icon="@android:drawable/ic_dialog_alert"
+                app:iconGravity="textStart"
+                app:iconTint="@android:color/white"
+                style="@style/Widget.Material3.Button" />
+
             <!-- Quick Settings Row -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

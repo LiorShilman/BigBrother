@@ -130,6 +130,16 @@ public class MainActivity extends AppCompatActivity {
             animateStatusChange(false);
         });
 
+        // SOS button
+        findViewById(R.id.btn_sos).setOnClickListener(v -> {
+            new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                    .setTitle("SOS Alert")
+                    .setMessage("Send emergency alert with your location?")
+                    .setPositiveButton("SEND SOS", (dialog, which) -> sendSOS())
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
+
         // Settings click
         findViewById(R.id.btn_settings).setOnClickListener(v -> {
             Intent launchPreferencesIntent = new Intent().setClass(this,
@@ -141,6 +151,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Entrance animations
         playEntranceAnimations();
+    }
+
+    private void sendSOS() {
+        Intent serviceIntent = new Intent(getApplicationContext(), GPSLocationSrv.class);
+        serviceIntent.setAction(Constants.ACTION.SOS_ACTION);
+        startService(serviceIntent);
+
+        com.google.android.material.snackbar.Snackbar.make(
+                        findViewById(R.id.coordinator_layout),
+                        "SOS Alert sent!",
+                        com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
+                .setBackgroundTint(ContextCompat.getColor(this, R.color.status_stopped))
+                .setTextColor(0xFFFFFFFF)
+                .show();
     }
 
     private void startTrackingService() {

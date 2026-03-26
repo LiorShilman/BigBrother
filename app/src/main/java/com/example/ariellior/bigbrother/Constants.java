@@ -11,6 +11,7 @@ public class Constants {
         public static final String RESTARTFOREGROUND_ACTION             = "com.example.ariellior.bigbrother.RESTART_FOREGROUND";
         public static final String STOPFOREGROUND_ACTION                = "com.example.ariellior.bigbrother.STOP_FOREGROUND";
         public static final String SENDMARKER_ACTION                    = "com.example.ariellior.bigbrother.SEND_MARKER";
+        public static final String SOS_ACTION                           = "com.example.ariellior.bigbrother.SOS";
 
         public static final String START_ACTION                         = "com.example.ariellior.bigbrother.START";
         public static final String PAUSE_ACTION                         = "com.example.ariellior.bigbrother.PAUSE";
